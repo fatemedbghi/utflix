@@ -81,6 +81,7 @@ public:
     std::string return_film_name();
     void check_numbers_validity(std::string str);
     void check_if_user_is_online(int publisher_needed);
+    void check_if_signingup_or_loggingin_is_possible();
     void check_if_film_is_bought();
     void check_if_publishers_matches();
     void check_validity_of_film_id();
@@ -91,6 +92,9 @@ public:
 protected:
     User* online_user;
     Publisher* online_publisher;
+    bool if_anyone_online;
+    bool admin_status;
+    Admin* admin;
     std::vector <Film*> data_base_films;
     std::vector <Film*> accessible_films;
     std::vector <Publisher*> publishers;

@@ -7,27 +7,33 @@ GetFilms::GetFilms() : Controller() {}
 void GetFilms::do_get_films(vector<string> order)
 {
     set_data_bases();
-    seperate_get_films_items(order);
     try {
         check_if_user_is_online(1);
-        if(order[3] == FILM_ID)
+        if(order.size() > 2)
         {
-            check_validity_of_film_id();
-            check_numbers_validity(information[FILM_ID]);
-            if(order.size() != 5)
-                throw BadRequest();
-            online_user->show_film_details(stoi(information[FILM_ID]) , accessible_films);
+            seperate_get_films_items(order);
+            if(order[3] == FILM_ID)
+            {
+                check_validity_of_film_id();
+                check_numbers_validity(information[FILM_ID]);
+                if(order.size() != 5)
+                    throw BadRequest();
+                online_user->show_film_details(stoi(information[FILM_ID]) , accessible_films);
+                DataBase::get_instance()->recommender_system(stoi(information[FILM_ID]) , online_user->return_id());
+            }
+            else
+            {
+                min_rate = min_year = max_year = price = -1;
+                check_numbers_validity(information[MIN_RATE]);
+                check_numbers_validity(information[MIN_YEAR]);
+                check_numbers_validity(information[MAX_YEAR]);
+                check_numbers_validity(information[PRICE]);
+                set_inputs();
+                online_user->search_films(information[NAME] , min_rate, min_year, price, max_year, information[DIRECTOR] , accessible_films);
+            }
         }
         else
-        {
-            min_rate = min_year = max_year = price = -1;
-            check_numbers_validity(information[MIN_RATE]);
-            check_numbers_validity(information[MIN_YEAR]);
-            check_numbers_validity(information[MAX_YEAR]);
-            check_numbers_validity(information[PRICE]);
-            set_inputs();
-            online_user->search_films(information[NAME] , min_rate, min_year, price, max_year, information[DIRECTOR] , accessible_films);
-        }
+            online_user->search_films("" ,-1 ,-1, -1, -1 , "" , accessible_films);
     } catch (const exception& e) {
         cout << e.what() << endl;
     }

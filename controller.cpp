@@ -7,7 +7,9 @@ Controller::Controller()
     online_publisher = NULL;
     online_user = NULL;
     last_film_id = 0;
-    last_user_id = 0;
+    last_user_id = 1;
+    if_anyone_online = false;
+    admin_status = false;
     information = map<string, string>();
 }
 
@@ -234,6 +236,8 @@ void Controller::set_data_bases()
 {
     online_user = DataBase::get_instance()->get_online_user();
     online_publisher = DataBase::get_instance()->get_online_publisher();
+    if_anyone_online = DataBase::get_instance()->show_if_anyone_online_status();
+    admin_status = DataBase::get_instance()->show_if_admin_is_online();
     data_base_films = DataBase::get_instance()->get_data_base_films();
     accessible_films = DataBase::get_instance()->get_accessible_films();
     publishers = DataBase::get_instance()->get_publishers();
@@ -267,6 +271,12 @@ void Controller::check_if_user_is_online(int publisher_needed)
     else
         if(!online_user)
             throw PermissionDenied();
+}
+
+void Controller::check_if_signingup_or_loggingin_is_possible()
+{
+    if(if_anyone_online)
+        throw BadRequest();
 }
 
 void Controller::check_if_film_is_bought()

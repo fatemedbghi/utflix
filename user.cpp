@@ -140,52 +140,13 @@ void User::show_film_details(int film_id , vector <Film*> all_films)
 
             cout << "Comments" << endl;
 
-            if ((all_films[i]->return_comments()).size() != 0)
-            {
                 for(int j=0; j< (all_films[i]->return_comments()).size() ; j++)
                 {
-                    cout << (all_films[i]->return_comments()[j])->return_comment_id() << "." << (all_films[i]->return_comments()[j])->return_comment() <<endl;
-                    cout << (all_films[i]->return_comments()[j])->return_comment_id() << ".1. " << (all_films[i]->return_comments()[j])->return_reply() << endl;
+                    cout << (all_films[i]->return_comments()[j])->return_comment_id();
+                    //  << "." << (all_films[i]->return_comments()[j])->return_comment() <<endl;
+                    // cout << (all_films[i]->return_comments()[j])->return_comment_id() << ".1. " << (all_films[i]->return_comments()[j])->return_reply() << endl;
                 }
-            }
-            recommand_films(film_id , all_films);
         }
-}
-
-void User::recommand_films(int film_id , vector <Film*> all_films)
-{
-    vector <Film*> top_four;
-    vector <Film*> _film;
-    _film = all_films;
-    for(int i=0; i<_film.size(); i++)
-    if (_film[i]->return_id() == film_id)
-        _film.erase(_film.begin() + i , _film.end() - (_film.size() - i - 1));
-    sort(_film.begin(), _film.end(), User::sort_by_year);
-    sort(_film.begin(), _film.end(),User::sort_by_rate);
-    cout << endl << "Recommendation Film" << endl << "#. Film Id | Film Name | Film Length | Film Director" << endl;
-    if (all_films.size() > 4)
-        print_recommanded_films(_film , 4);
-    if (_film.size() < 4 && _film.size() > 0)
-        print_recommanded_films(_film , _film.size());
-}
-
-void User::print_recommanded_films(vector <Film*> _film , int limit)
-{
-    for(int i=0;i< limit ; i++)
-    {    
-        cout << i+1 << ". " << _film[i]->return_id() << " | " << _film[i]->name << " | " << _film[i]->length;
-        cout << " | " << _film[i]->director << endl;
-    }
-}
-
-bool User::sort_by_rate(Film* A, Film* B)
-{
-    return (A->return_rate() > B->return_rate());
-}
-
-bool User::sort_by_year(Film* A, Film* B)
-{
-    return (A->year < B->year);
 }
 
 void User::buy_film(int film_id ,vector<Film*> all_films)
@@ -216,7 +177,7 @@ void User::post_comment(int film_id , string content ,int comment_id , vector<Fi
 {
     for (int i=0; i<all_films.size(); i++)
         if (all_films[i]->return_id() == film_id)
-            all_films[i]->add_comment(content , comment_id , this->return_id());
+            all_films[i]->add_comment(content , this->return_id());
     cout << "OK" << endl;
 }
 

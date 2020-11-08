@@ -11,6 +11,7 @@
 #include "delete_films.h"
 #include "get_films.h"
 #include "get_followers.h"
+#include "get_money.h"
 #include "get_notifications.h"
 #include "get_notifications_read.h"
 #include "get_published.h"
@@ -20,6 +21,7 @@
 #include "post_films.h"
 #include "post_followers.h"
 #include "post_login.h"
+#include "post_logout.h"
 #include "post_money.h"
 #include "post_rate.h"
 #include "post_replies.h"
@@ -48,10 +50,12 @@ private:
     std::vector <std::string> order;
     PostSignup* post_signup;
     PostLogin* post_login;
+    PostLogout* post_logout;
     DeleteComments* delete_comments;
     DeleteFilms* delete_films;
     GetFilms* get_films;
     GetFollowers* get_followers;
+    GetMoney* get_money;
     GetNotifications* get_notifications;
     GetNotificationsRead* get_notifications_read;
     GetPublished* get_published;

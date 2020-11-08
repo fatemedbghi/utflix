@@ -4,6 +4,7 @@ using namespace std;
 MediaService::MediaService() {
     post_signup = new PostSignup();
     post_login = new PostLogin();
+    post_logout = new PostLogout();
     delete_comments = new DeleteComments();
     delete_films = new DeleteFilms();
     get_films = new GetFilms();
@@ -17,6 +18,7 @@ MediaService::MediaService() {
     post_films = new PostFilms();
     post_followers = new PostFollowers();
     post_money = new PostMoney();
+    get_money = new GetMoney();
     post_rate = new PostRate();
     post_replies = new PostReplies();
     put_films = new PutFilms();
@@ -26,6 +28,7 @@ MediaService::~MediaService()
 {
     delete post_signup;
     delete post_login;
+    delete post_logout;
     delete delete_comments;
     delete delete_films;
     delete get_films;
@@ -79,7 +82,7 @@ vector <string> MediaService::remove_extra_spaces(string str)
 
 void MediaService::check_controllers(string controller)
 {
-    if (controller!="POST" && controller!="GET" && controller!="PUT" && controller!="DELETE")
+    if (controller!="POST" && controller!="GET")
         throw BadRequest();
 }
 
@@ -89,34 +92,20 @@ void MediaService::check_url()
         check_get_url();
     if (order[0].compare("POST") == 0)
         check_post_url();
-    if (order[0].compare("PUT") == 0)
-        check_put_url();
-    if (order[0].compare("DELETE") == 0)
-        check_delete_url();
 }
 
 void MediaService::check_get_url()
 {
-    if (order[1]!= "followers" && order[1]!= "published" && order[1]!= "films" && order[1]!= "purchased" && order[1]!= "notifications")
+    if (order[1]!= "followers" && order[1]!= "published" && order[1]!= "films"
+    && order[1]!= "purchased" && order[1]!= "notifications" && order[1]!="money")
         throw NotFound();
 }
 
 void MediaService::check_post_url()
 {
-    if (order[1]!= "signup" && order[1]!= "login" && order[1]!= "films" && order[1]!= "money"
-    && order[1]!= "replies" && order[1]!= "followers" && order[1]!= "buy" && order[1]!= "rate" && order[1]!= "comments")
-        throw NotFound();
-}
-
-void MediaService::check_put_url()
-{
-    if (order[1]!= "films")
-        throw NotFound();
-}
-
-void MediaService::check_delete_url()
-{
-    if (order[1]!= "films" && order[1]!= "comments")
+    if (order[1]!= "signup" && order[1]!= "login" && order[1]!= "logout" && order[1]!= "films" && order[1]!= "money" 
+    && order[1]!="put_films" && order[1]!= "replies" && order[1]!= "followers" && order[1]!= "buy" && order[1]!= "rate" 
+    && order[1]!= "comments" && order[1]!="delete_films" && order[1]!="delete_comments")
         throw NotFound();
 }
 
@@ -126,18 +115,22 @@ void MediaService::call_each_url(std::vector <std::string> input)
         post_signup->do_signup(input);
     if (input[1] == "login")
         post_login->do_login(input);
+    if (input[1] == "logout")
+        post_logout->do_logout(input);
     if (input[0] == "POST" && input[1] == "films")
         post_films->do_post_films(input);
-    if (input[0] == "PUT" && input[1] == "films")
+    if (input[0] == "POST" && input[1] == "put_films")
         put_films->do_put_films(input);
-    if (input[0] == "DELETE" && input[1] == "films")
+    if (input[0] == "POST" && input[1] == "delete_films")
         delete_films->do_delete_films(input);
-    if (input[0] == "DELETE" && input[1] == "comments")
+    if (input[0] == "POST" && input[1] == "delete_comments")
         delete_comments->do_delete_comments(input);
     if (input[0] == "GET" && input[1] == "followers")
         get_followers->do_get_followers();
     if (input[0] == "POST" && input[1] == "money")
         post_money->do_post_money(input);
+    if(input[0] == "GET" && input[1] == "money")
+        get_money->do_get_money(input);
     if (input[0] == "GET" && input[1] == "published")
         get_published->do_get_published(input);
     if (input[0] == "POST" && input[1] == "replies")

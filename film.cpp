@@ -29,11 +29,11 @@ Film::~Film()
         delete comments[i];
 }
 
-void Film::add_comment(string new_comment, int comment_id , int user_id)
+void Film::add_comment(string new_comment, int user_id)
 {
     last_comment_id++;
-    Comment com(new_comment , id , user_id);
-    comments.push_back(&com);
+    Comment* com = new Comment(new_comment , last_comment_id , user_id);
+    comments.push_back(com);
 }
 
 void Film::calculate_rate(float _rate)
@@ -42,3 +42,7 @@ void Film::calculate_rate(float _rate)
     rate = (rate * (number_of_people_rated - 1) + _rate)/number_of_people_rated;
 }
 
+void Film::delete_comment(int fid , int cid)
+{
+    comments.erase(comments.begin() +cid);
+}

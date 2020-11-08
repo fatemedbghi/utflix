@@ -13,8 +13,11 @@ void PostBuy::do_post_buy(vector<string> order)
         check_numbers_validity(information[FILM_ID]);
         is_input_complete();
         check_validity_of_film_id();
+        DataBase::get_instance()->update_recommender_system(stoi(information[FILM_ID]), online_user->return_id());
         online_user->buy_film(stoi(information[FILM_ID]), accessible_films);
         send_notification();
+        send_money();
+        DataBase::get_instance()->set_online_user(online_user);
         DataBase::get_instance()->set_users(users);
     } catch (const exception& e) {
         cout << e.what() << endl;
@@ -45,5 +48,18 @@ void PostBuy::send_notification()
                     notif.append(information[FILM_ID]);
                     notif.append(".");
                     users[i]->add_notifications(notif);
+                }
+}
+
+void PostBuy::send_money()
+{
+    for(int i=0;i < publishers.size();i++)
+        for(int j=0;j<accessible_films.size();j++)
+            if(accessible_films[j]->return_id() == stoi(information[FILM_ID]))
+                if(accessible_films[j]->return_user_id() == publishers[i]->return_id())
+                {
+                    publishers[i]->calculate_unsetteled_money(accessible_films[j]->return_price() , accessible_films[j]->return_status());
+                    Admin::get_admin_instance()->add_cash_from_profit(accessible_films[j]->return_price() , 1);
+                    DataBase::get_instance()->set_publishers(publishers);
                 }
 }

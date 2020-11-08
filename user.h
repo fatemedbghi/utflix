@@ -3,7 +3,6 @@
 
 #include <string>
 #include <vector>
-#include <string>
 #include <iostream>
 #include <algorithm>
 #include "film.h"
@@ -21,6 +20,7 @@ public:
     std::string return_password() {return password;};
     std::string return_email() {return email;};
     bool return_if_publisher() {return is_publisher;};
+    int return_cash() {return cash;};
     std::vector <Film*> return_bought_films() {return films;};
     void follow_publisher(Publisher* publisher);
     void add_money(int amount);
@@ -33,10 +33,6 @@ public:
     std::vector <Film*> filter_price(std::vector <Film*> before_filtering , int price);
     std::vector <Film*> filter_director(std::vector <Film*> before_filtering , std::string director);
     void show_film_details(int film_id , std::vector <Film*> all_films);
-    void recommand_films(int film_id , std::vector <Film*> all_films);
-    void print_recommanded_films(std::vector <Film*> _films , int limit);
-    static bool sort_by_rate(Film* A, Film* B);
-    static bool sort_by_year(Film* A, Film* B);
     void buy_film(int film_id ,std::vector<Film*> all_films);
     void rate_film (int film_id , int score , std::vector<Film*> all_films);
     void post_comment (int film_id , std::string content , int commnet_id , std::vector<Film*> all_films);
@@ -60,7 +56,6 @@ protected:
     std::vector <std::string> unread_notifications;
     std::vector <std::string> read_notifications;
     std::vector <Publisher*> followed_publishers;
-
 };
 
 #endif

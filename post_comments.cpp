@@ -44,7 +44,7 @@ void PostComments::exert_comments(vector <Film*> films)
 {
     for(int i=0;i<films.size(); i++)
         if(films[i]->return_id() == stoi(information[FILM_ID]))
-            films[i]->add_comment(information[CONTENT] , return_comment_id() , online_user->return_id());
+            films[i]->add_comment(information[CONTENT] , online_user->return_id());
 }
 
 void PostComments::send_notification()

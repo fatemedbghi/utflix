@@ -17,7 +17,9 @@ void DeleteComments::do_delete_comments(vector <string> order)
         is_input_complete();
         online_publisher->delete_comment(stoi(information[FILM_ID]) , stoi(information[COMMENT_ID]));
         delete_specific_comment(data_base_films);
+        cout << 5 << endl;
         delete_specific_comment(accessible_films);
+
         DataBase::get_instance()->set_accessible_films(accessible_films);
         DataBase::get_instance()->set_data_base_films(data_base_films);
     } catch (const exception& e) {
@@ -37,5 +39,6 @@ void DeleteComments::delete_specific_comment(vector <Film*> films)
         if(films[i]->return_id() == stoi(information[FILM_ID]))
             for(int j=0;j<films[i]->return_comments().size();j++)
                 if(films[i]->return_comments()[j]->return_comment_id() == stoi(information[COMMENT_ID]))
-                    films[i]->return_comments().erase(films[i]->return_comments().begin() + j , films[i]->return_comments().end() - (films[i]->return_comments().size()- j - 1));
+                    films[i]->delete_comment(i,j);
+                
 }

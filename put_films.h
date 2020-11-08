@@ -10,7 +10,7 @@ public:
     void do_put_films(std::vector<std::string> order);
     void is_input_complete();
     void filter_films();
-    void exert_edit_film(std::vector<Film*> films);
+    std::vector<Film*> exert_edit_film(std::vector<Film*> films);
 private:
     int year;
     int length;

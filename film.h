@@ -17,7 +17,8 @@ public:
     Film(std::string _name , int _year ,int _length, int _price , std::string _summary , std::string _director , int _id , int _user_id);
     ~Film();
     void calculate_rate(float _rate);
-    void add_comment(std::string new_comment, int comment_id , int user_id);
+    void add_comment(std::string new_comment, int user_id);
+    void delete_comment(int fid , int cid);
     std::vector <Comment*> return_comments() {return comments;};
     int return_id() {return id;};
     float return_rate() {return rate;};

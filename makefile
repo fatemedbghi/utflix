@@ -4,13 +4,13 @@ COMPILE_FLAGS = $(FLAGS) -c
 
 all: a.out
 
-a.out: main.o media_service.o controller.o data_base.o delete_comments.o delete_films.o get_films.o get_followers.o get_notifications.o get_notifications_read.o get_published.o get_purchased.o post_buy.o post_comments.o post_films.o post_followers.o post_login.o post_money.o post_signup.o post_rate.o post_replies.o put_films.o user.o publisher.o film.o comment.o
-	$(CC) main.o media_service.o controller.o data_base.o delete_comments.o delete_films.o get_films.o get_followers.o get_notifications.o get_notifications_read.o get_published.o get_purchased.o post_buy.o post_comments.o post_films.o post_followers.o post_login.o post_money.o post_signup.o post_rate.o post_replies.o put_films.o user.o publisher.o film.o comment.o $(FLAGS) -o a.out
+a.out: main.o media_service.o controller.o data_base.o admin.o delete_comments.o delete_films.o get_films.o get_followers.o get_money.o get_notifications.o get_notifications_read.o get_published.o get_purchased.o post_buy.o post_comments.o post_films.o post_followers.o post_login.o post_logout.o post_money.o post_signup.o post_rate.o post_replies.o put_films.o user.o publisher.o film.o comment.o
+	$(CC) main.o media_service.o controller.o data_base.o admin.o delete_comments.o delete_films.o get_films.o get_followers.o get_money.o get_notifications.o get_notifications_read.o get_published.o get_purchased.o post_buy.o post_comments.o post_films.o post_followers.o post_login.o post_logout.o post_money.o post_signup.o post_rate.o post_replies.o put_films.o user.o publisher.o film.o comment.o $(FLAGS) -o a.out
 	
 main.o: main.cpp media_service.h
 	$(CC) $(COMPILE_FLAGS) main.cpp
 
-media_service.o: media_service.h media_service.cpp controller.h delete_comments.h delete_films.h get_films.h get_followers.h get_notifications.h get_notifications_read.h get_published.h get_purchased.h post_buy.h post_comments.h post_films.h post_followers.h post_login.h post_money.h post_signup.h post_rate.h post_replies.h put_films.h data_base.h
+media_service.o: media_service.h media_service.cpp controller.h delete_comments.h delete_films.h get_films.h get_followers.h get_money.h get_notifications.h get_notifications_read.h get_published.h get_purchased.h post_buy.h post_comments.h post_films.h post_followers.h post_login.h post_logout.o post_money.h post_signup.h post_rate.h post_replies.h put_films.h data_base.h
 	$(CC) $(COMPILE_FLAGS) media_service.cpp
 
 controller.o: controller.h controller.cpp exception.h user.h publisher.h data_base.h
@@ -19,8 +19,11 @@ controller.o: controller.h controller.cpp exception.h user.h publisher.h data_ba
 delete_comments.o: delete_comments.h delete_comments.cpp controller.h
 	$(CC) $(COMPILE_FLAGS) delete_comments.cpp
 
-data_base.o: data_base.h data_base.cpp
+data_base.o: data_base.h data_base.cpp film.h publisher.h user.h
 	$(CC) $(COMPILE_FLAGS) data_base.cpp
+
+admin.o: admin.h admin.cpp
+	$(CC) $(COMPILE_FLAGS) admin.cpp
 
 delete_films.o: delete_films.h delete_films.cpp controller.h
 	$(CC) $(COMPILE_FLAGS) delete_films.cpp
@@ -29,7 +32,10 @@ get_films.o: get_films.h get_films.cpp controller.h
 	$(CC) $(COMPILE_FLAGS) get_films.cpp
 
 get_followers.o: get_followers.h get_followers.cpp controller.h
-	$(CC) $(COMPILE_FLAGS) get_followers.cpp	
+	$(CC) $(COMPILE_FLAGS) get_followers.cpp
+
+get_money.o: get_money.h get_money.cpp controller.h
+	$(CC) $(COMPILE_FLAGS) get_money.cpp	
 
 get_notifications.o: get_notifications.h get_notifications.cpp controller.h
 	$(CC) $(COMPILE_FLAGS) get_notifications.cpp
@@ -57,6 +63,9 @@ post_followers.o: post_followers.h post_followers.cpp controller.h
 
 post_login.o: post_login.h post_login.cpp controller.h
 	$(CC) $(COMPILE_FLAGS) post_login.cpp
+
+post_logout.o: post_logout.h post_logout.cpp controller.h
+	$(CC) $(COMPILE_FLAGS) post_logout.cpp
 
 post_money.o: post_money.h post_money.cpp controller.h
 	$(CC) $(COMPILE_FLAGS) post_money.cpp
@@ -88,4 +97,4 @@ comment.o: comment.h comment.cpp
 .PHONY: clean
 
 clean:
-	rm *.o *.out
+	rm *.o

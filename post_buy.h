@@ -10,6 +10,7 @@ public:
     void do_post_buy(std::vector<std::string> order);
     void is_input_complete();
     void send_notification();
+    void send_money();
 };
 
 #endif

@@ -103,6 +103,7 @@ void Publisher::delete_comment(int film_id , int comment_id)
         if(published_films[i]->return_id() == film_id)
             for (int j = 0; j< (published_films[i]->return_comments()).size(); j++)
                 if(published_films[i]->return_comments()[j]->return_comment_id() == comment_id)
-                    published_films[i]->return_comments().erase(published_films[i]->return_comments().begin() + j , published_films[i]->return_comments().end() - (published_films[i]->return_comments().size() - j - 1));
+                    published_films[i]->return_comments().erase(published_films[i]->return_comments().begin() + j
+                     , published_films[i]->return_comments().end() - (published_films[i]->return_comments().size() - j - 1));
     cout << "OK" << endl;
 }

@@ -18,11 +18,12 @@ void PutFilms::do_put_films(vector<string> order)
         filter_films();
         online_publisher->edit_film(stoi(information[FILM_ID]) ,information[NAME] ,year , length, information[SUMMARY] , information[DIRECTOR]);
         DataBase::get_instance()->set_publishers(publishers);
-        exert_edit_film(accessible_films);
-        exert_edit_film(data_base_films);
+        DataBase::get_instance()->set_data_base_films(exert_edit_film(data_base_films));
+        DataBase::get_instance()->set_accessible_films(exert_edit_film(accessible_films));
     } catch (const exception& e) {
         cout << e.what() << endl;
     }
+
 }
 
 void PutFilms::is_input_complete()
@@ -41,7 +42,7 @@ void PutFilms::filter_films()
         length = stoi(information[LENGTH]);
 }
 
-void PutFilms::exert_edit_film(vector<Film*> films)
+vector<Film*> PutFilms::exert_edit_film(vector<Film*> films)
 {
     for(int i=0; i<films.size(); i++)
         if(films[i]->return_id() == stoi(information[FILM_ID]))
@@ -57,6 +58,5 @@ void PutFilms::exert_edit_film(vector<Film*> films)
             if(information[DIRECTOR] != "")
                 films[i]->director = information[DIRECTOR];
         }
-    DataBase::get_instance()->set_accessible_films(films);
-    DataBase::get_instance()->set_data_base_films(films);
+    return films;
 }

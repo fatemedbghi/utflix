@@ -20,6 +20,7 @@ public:
     void delete_comment(int film_id , int comment_id);
     std::vector<User*> return_followers() {return followers;};
     std::vector<Film*> return_published_films() {return published_films;};
+    int return_unsetteled_money() {return unsetteled_money;};
 private:
     std::vector <Film*> published_films;
     std::vector <User*> followers;
