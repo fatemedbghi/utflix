@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body { 
+  background-image: url("background.png");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
+}
+.button {
+  background-color: #f4511e;
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-align: center;
+  font-size: 16px;
+  margin: 4px 2px;
+  opacity: 0.6;
+  transition: 0.3s;
+  display: inline-block;
+  text-decoration: none;
+  cursor: pointer;
+}
+.button:hover {opacity: 1}
+
+a:link, a:visited {
+  background-color: #f44336;
+  color: white;
+  padding: 14px 25px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+
+a:hover, a:active {
+  background-color: red;
+}
+</style>
+</head>
+  <body style="text-align: center;">
+  <br /><a href="/logout">Logout</a>
+    <div style=" padding: 1%; max-width: 300px; border-radius: 3px; margin: auto; ">
+      <form action="/post_films" method="post">
+    <h1>Post Film</h1>
+    <p>Please fill in this form to upload film.</p>
+    <label for="name"><b>Name</b></label>
+    <input type="text" placeholder="Enter Name" name="name" required>
+
+    <label for="director"><b>Director</b></label>
+    <input type="text" placeholder="Enter Director" name="director" required>
+
+    <label for="summary"><b>Summay</b></label>
+    <input type="text" placeholder="Enter Summary" name="summary" required><br>
+
+    <label for="year"><b>Year</b></label><br>
+    <input type="number" placeholder="Enter Year" name="year" min="1800" required><br>
+    
+    <label for="length"><b>Length</b></label><br>
+    <input type="number" placeholder="Enter Length" name="length" min="0" required><br>
+    
+    <label for="price"><b>Price</b></label><br>
+    <input type="number" placeholder="Enter Price" name="price" min="0" required>
+
+        <button class="button" type="submit" style="display:block; width: 100%; padding: 7px;">Post Film</button>
+        <button class="button" type="reset" style="display:block; width: 100%; padding: 7px;">Reset</button>
+      </form>
+    </div>
+  </body>
+</html>
